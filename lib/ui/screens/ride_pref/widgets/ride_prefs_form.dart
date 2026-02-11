@@ -1,3 +1,4 @@
+import 'package:blablacar/ui/screens/ride_pref/location_picker.dart';
 import 'package:blablacar/ui/screens/ride_pref/widgets/bla_button.dart';
 import 'package:blablacar/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,14 @@ class _RidePrefFormState extends State<RidePrefForm> {
     
     });
   }
+
+  void onTap()
+  {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LocationPickerScreen())
+      );
+  }
   // ----------------------------------
   // Compute the widgets rendering
   // ----------------------------------
@@ -78,7 +87,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
                   child: ListTile(
                     leading: const Icon(Icons.circle),
                     title: Text(departure?.name ?? 'Select departure'),
-                    onTap: () {},
+                    onTap: onTap,
                   ),
                 ),
                 IconButton(
@@ -93,7 +102,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
             ListTile(
               leading: const Icon(Icons.circle),
               title: Text(arrival?.name ?? 'Select arrival'),
-              onTap: () {},
+              onTap: onTap,
             ),
 
             const Divider(),
