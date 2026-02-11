@@ -1,5 +1,6 @@
 import 'package:blablacar/model/ride_pref/ride_pref.dart';
 import 'package:blablacar/services/ride_prefs_service.dart';
+import 'package:blablacar/ui/screens/ride_pref/widgets/bla_button.dart';
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
 import 'widgets/ride_prefs_form.dart';
@@ -54,6 +55,11 @@ class RidePrefsScreen extends StatelessWidget {
 
               // 3 - THE HISTORY
               _buildHistory(),
+              SizedBox(height: 200),
+              BlaButton.secondary(label: "Request to book", icon: Icons.date_range,),
+              SizedBox(height: 30),
+              BlaButton.primary(label: "Contact Volodia", icon: Icons.contact_mail,),
+              
             ],
           ),
         ),
