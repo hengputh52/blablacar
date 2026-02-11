@@ -1,3 +1,5 @@
+import 'package:blablacar/ui/screens/ride_pref/widgets/bla_button.dart';
+import 'package:blablacar/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../model/ride/locations.dart';
@@ -26,7 +28,8 @@ class _RidePrefFormState extends State<RidePrefForm> {
   Location? departure;
   late DateTime departureDate;
   Location? arrival;
-  late int requestedSeats;
+  late int requestedSeats = 1;
+
 
   // ----------------------------------
   // Initialize the Form attributes
@@ -36,12 +39,23 @@ class _RidePrefFormState extends State<RidePrefForm> {
   void initState() {
     super.initState();
     // TODO
+
+    departureDate =  DateTime.now();
+    requestedSeats =  1;
   }
 
   // ----------------------------------
   // Handle events
   // ----------------------------------
+  void onSwitchLocation() {
+    setState(() {
+      final Location? temp = departure;
+      departure = arrival;
+      arrival = temp;
 
+    
+    });
+  }
   // ----------------------------------
   // Compute the widgets rendering
   // ----------------------------------
@@ -54,8 +68,52 @@ class _RidePrefFormState extends State<RidePrefForm> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [ 
-        
-        ]);
+      children: [
+        Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: ListTile(
+                    leading: const Icon(Icons.circle),
+                    title: Text(departure?.name ?? 'Select departure'),
+                    onTap: () {},
+                  ),
+                ),
+                IconButton(
+                  onPressed: onSwitchLocation,
+                  icon: Icon(Icons.swap_vert),
+                ),
+              ],
+            ),
+
+            const Divider(),
+
+            ListTile(
+              leading: const Icon(Icons.circle),
+              title: Text(arrival?.name ?? 'Select arrival'),
+              onTap: () {},
+            ),
+
+            const Divider(),
+
+            ListTile(
+              leading: const Icon(Icons.calendar_month),
+              title: Text(DateTimeUtils.formatDateTime(DateTime.now())),
+              onTap: () {},
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: Text('$requestedSeats'),
+              onTap: () {},
+            ),
+
+            BlaButton.primary(label: "Search"),
+          ],
+        ),
+      ],
+    );
   }
 }

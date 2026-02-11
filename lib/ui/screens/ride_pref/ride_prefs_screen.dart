@@ -55,10 +55,10 @@ class RidePrefsScreen extends StatelessWidget {
 
               // 3 - THE HISTORY
               _buildHistory(),
-              SizedBox(height: 200),
-              BlaButton.secondary(label: "Request to book", icon: Icons.date_range,),
-              SizedBox(height: 30),
-              BlaButton.primary(label: "Contact Volodia", icon: Icons.contact_mail,),
+              
+              // BlaButton.secondary(label: "Request to book", icon: Icons.date_range,),
+              // SizedBox(height: 30),
+              // BlaButton.primary(label: "Contact Volodia", icon: Icons.contact_mail,),
               
             ],
           ),
