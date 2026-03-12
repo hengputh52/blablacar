@@ -1,5 +1,5 @@
-import 'package:blablacar/services/rides_service.dart';
-import 'package:blablacar/ui/widgets/display/bla_divider.dart';
+import 'package:blablacar/blablaCar_1/services/rides_service.dart';
+import 'package:blablacar/blablaCar_1/ui/widgets/display/bla_divider.dart';
 import 'package:flutter/material.dart';
 
 class LocationPickerScreen extends StatefulWidget {

@@ -1,5 +1,5 @@
-import '../data/dummy_data.dart';
-import '../model/ride_pref/ride_pref.dart';
+import '../blablaCar_1/data/dummy_data.dart';
+import '../blablaCar_1/model/ride_pref/ride_pref.dart';
 
 ////
 ///   This service handles:

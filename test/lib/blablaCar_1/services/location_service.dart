@@ -1,6 +1,6 @@
 import 'package:blablacar/blablaCar_1/data/dummy_data.dart';
 
-import '../blablaCar_1/model/ride/locations.dart';
+import '../model/ride/locations.dart';
 
 ////
 ///   This service handles:

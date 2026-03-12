@@ -1,10 +1,11 @@
-import 'package:blablacar/model/ride_pref/ride_pref.dart';
-import 'package:blablacar/services/ride_prefs_service.dart';
-import 'package:blablacar/ui/screens/ride_pref/widgets/bla_button.dart';
+import 'package:blablacar/week8/model/ride_pref/ride_pref.dart';
+import 'package:blablacar/week8/services/ride_prefs_service.dart';
+import 'package:blablacar/week8/ui/screens/home/widgets/home_history_tile.dart';
+import 'package:blablacar/week8/ui/screens/rides_selection/rides_selection_screen.dart';
+import 'package:blablacar/week8/ui/theme/theme.dart';
+import 'package:blablacar/week8/ui/widgets/picker/bla_ride_preference_picker.dart';
+import 'package:blablacar/week8/utils/animations_util.dart';
 import 'package:flutter/material.dart';
-import '../../theme/theme.dart';
-import 'widgets/ride_prefs_form.dart';
-import 'widgets/ride_prefs_tile.dart';
 
 const String blablaHomeImagePath = 'assets/images/blabla_home.png';
 
@@ -13,15 +14,29 @@ const String blablaHomeImagePath = 'assets/images/blabla_home.png';
 /// - Enter his/her ride preference and launch a search on it
 /// - Or select a last entered ride preferences and launch a search on it
 ///
-class RidePrefsScreen extends StatelessWidget {
-  const RidePrefsScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
-  void onRidePrefSelected(RidePref ridePref) {
-    // TODO
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  void onRidePrefSelected(RidePreference selectedPreference) async {
+    // 1- Ask the service to update the current preference
+    RidePrefsService.selectPreference(selectedPreference);
+
+    // 2 - Navigate to the rides screen
+    await Navigator.of(
+      context,
+    ).push(AnimationUtils.createBottomToTopRoute(RidesSelectionScreen()));
+
+    // 3 - After wait  - Update the state   - TODO Improve this with proper state managagement
+    setState(() {});
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Stack(children: [_buildBackground(), _buildForeground()]);
   }
 
@@ -50,16 +65,14 @@ class RidePrefsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // 2 - THE FORM
-              RidePrefForm(initRidePref: RidePrefsService.selectedRidePref),
-              SizedBox(height: BlaSpacings.m),
+              BlaRidePreferencePicker(
+                initRidePreference: RidePrefsService.selectedPreference,
+                onRidePreferenceSelected: onRidePrefSelected,
+              ),
+              SizedBox(height: BlaSpacings.m),  
 
               // 3 - THE HISTORY
               _buildHistory(),
-              
-              // BlaButton.secondary(label: "Request to book", icon: Icons.date_range,),
-              // SizedBox(height: 30),
-              // BlaButton.primary(label: "Contact Volodia", icon: Icons.contact_mail,),
-              
             ],
           ),
         ),
@@ -68,16 +81,18 @@ class RidePrefsScreen extends StatelessWidget {
   }
 
   Widget _buildHistory() {
+    // Reverse the history of preferences
+    List<RidePreference> history = RidePrefsService.preferenceHistory.reversed
+        .toList();
     return SizedBox(
       height: 200, // Set a fixed height
       child: ListView.builder(
         shrinkWrap: true, // Fix ListView height issue
         physics: AlwaysScrollableScrollPhysics(),
-        itemCount: RidePrefsService.ridePrefsHistory.length,
-        itemBuilder: (ctx, index) => RidePrefsTile(
-          ridePref: RidePrefsService.ridePrefsHistory[index],
-          onPressed: () =>
-              onRidePrefSelected(RidePrefsService.ridePrefsHistory[index]),
+        itemCount: history.length,
+        itemBuilder: (ctx, index) => HomeHistoryTile(
+          ridePref: history[index],
+          onPressed: () => onRidePrefSelected(history[index]),
         ),
       ),
     );

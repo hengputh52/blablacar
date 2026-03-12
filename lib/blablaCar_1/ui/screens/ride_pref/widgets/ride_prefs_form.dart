@@ -1,6 +1,6 @@
-import 'package:blablacar/ui/screens/ride_pref/location_picker.dart';
-import 'package:blablacar/ui/screens/ride_pref/widgets/bla_button.dart';
-import 'package:blablacar/utils/date_time_utils.dart';
+import 'package:blablacar/blablaCar_1/ui/screens/ride_pref/location_picker.dart';
+import 'package:blablacar/blablaCar_1/ui/screens/ride_pref/widgets/bla_button.dart';
+import 'package:blablacar/blablaCar_1/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../model/ride/locations.dart';
