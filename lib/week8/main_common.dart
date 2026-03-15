@@ -1,4 +1,5 @@
 import 'package:blablacar/week8/ui/screens/home/home_screen.dart';
+import 'package:blablacar/week8/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,22 +10,20 @@ void mainCommon(List<InheritedProvider> providers) {
   runApp(
     MultiProvider(
       providers: providers,
-      child: MaterialApp(debugShowCheckedModeBanner: false, home: MyApp()),
+      child: MaterialApp(debugShowCheckedModeBanner: false, home: BlaBlaApp()),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class BlaBlaApp extends StatelessWidget {
+  const BlaBlaApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: HomeScreen(),
-      ),
+      theme: blaTheme,
+      home: Scaffold(body: HomeScreen()),
     );
   }
 }
-

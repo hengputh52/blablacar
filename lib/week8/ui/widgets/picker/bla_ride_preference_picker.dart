@@ -2,7 +2,7 @@ import 'package:blablacar/week8/model/ride/location.dart';
 import 'package:blablacar/week8/ui/widgets/button/bla_button.dart';
 import 'package:blablacar/week8/ui/widgets/button/bla_icon_button.dart';
 import 'package:blablacar/week8/ui/widgets/display/bla_divider.dart';
-import 'package:blablacar/week8/ui/widgets/picker/bla_location.dart';
+import 'package:blablacar/week8/ui/widgets/picker/bla_location_picker.dart';
 import 'package:flutter/material.dart';
 import '../../../model/ride_pref/ride_pref.dart';
 import '../../../services/ride_prefs_service.dart';

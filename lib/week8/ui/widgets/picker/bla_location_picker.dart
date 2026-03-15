@@ -1,7 +1,11 @@
+import 'package:blablacar/week8/data/repositories/location/location_repository.dart';
 import 'package:blablacar/week8/model/ride/location.dart';
 import 'package:blablacar/week8/services/location_service.dart';
+import 'package:blablacar/week8/ui/states/location_state.dart';
 import 'package:blablacar/week8/ui/widgets/display/bla_divider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../../theme/theme.dart';
 
 ///
@@ -60,6 +64,9 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
 
   @override
   Widget build(BuildContext context) {
+    final locationState = LocationState(
+      locationRepository: context.read<LocationRepository>(),
+    );
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(
@@ -72,16 +79,16 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
             LocationSearchBar(
               initSearch: currentSearchText,
               onBackTap: onBackTap,
-              onSearchChanged: onSearchChanged,
+              onSearchChanged: locationState.onSearchChanged,
             ),
 
             SizedBox(height: 20),
 
             Expanded(
               child: ListView.builder(
-                itemCount: filteredLocation.length,
+                itemCount: locationState.filteredLocation.length,
                 itemBuilder: (context, index) => LocationTile(
-                  location: filteredLocation[index],
+                  location: locationState.filteredLocation[index],
                   onTap: onTap,
                 ),
               ),
