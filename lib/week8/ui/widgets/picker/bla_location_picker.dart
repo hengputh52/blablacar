@@ -12,8 +12,9 @@ import '../../theme/theme.dart';
 /// A  Location Picker is a view to pick a Location:
 ///
 class BlaLocationPicker extends StatefulWidget {
-  const BlaLocationPicker({super.key, required this.initLocation});
+  const BlaLocationPicker({super.key, required this.initLocation, required this.locationState});
 
+  final LocationState locationState;
   final Location? initLocation; // optional initial location
 
   @override
@@ -41,6 +42,7 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
         currentSearchText = widget.initLocation!.name;
       });
     }
+    
   }
 
   void onSearchChanged(String search) {
@@ -64,36 +66,42 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
 
   @override
   Widget build(BuildContext context) {
-    final locationState = LocationState(
-      locationRepository: context.read<LocationRepository>(),
-    );
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(
-          left: BlaSpacings.m,
-          right: BlaSpacings.m,
-          top: BlaSpacings.s,
-        ),
-        child: Column(
-          children: [
-            LocationSearchBar(
-              initSearch: currentSearchText,
-              onBackTap: onBackTap,
-              onSearchChanged: locationState.onSearchChanged,
-            ),
 
-            SizedBox(height: 20),
-
-            Expanded(
-              child: ListView.builder(
-                itemCount: locationState.filteredLocation.length,
-                itemBuilder: (context, index) => LocationTile(
-                  location: locationState.filteredLocation[index],
-                  onTap: onTap,
+    return ChangeNotifierProvider.value(
+      value: widget.locationState,
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.only(
+            left: BlaSpacings.m,
+            right: BlaSpacings.m,
+            top: BlaSpacings.s,
+          ),
+          child: Column(
+            children: [
+              Builder(
+                builder: (context) =>
+                LocationSearchBar(
+                  initSearch: currentSearchText,
+                  onBackTap: onBackTap,
+                  onSearchChanged: context.read<LocationState>().onSearchChanged,
                 ),
               ),
-            ),
-          ],
+      
+              SizedBox(height: 20),
+      
+              Expanded(
+                child: Consumer<LocationState>(builder: (context, locationState, _) => 
+                ListView.builder(
+                  itemCount: locationState.filteredLocation.length,
+                  itemBuilder: (context, index) => LocationTile(
+                    location: locationState.filteredLocation[index],
+                    onTap: onTap,
+                  ),
+                ),
+              )
+              ),
+            ],
+          ),
         ),
       ),
     );

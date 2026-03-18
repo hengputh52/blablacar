@@ -10,6 +10,10 @@ class LocationState extends ChangeNotifier {
 
   List<Location> get locations => _locations == null ? [] : _locations!;
 
+  void init() {
+    getAllLocation();
+  }
+
   void getAllLocation() async {
     _locations = await locationRepository.availableLocations();
     notifyListeners();
@@ -24,11 +28,10 @@ class LocationState extends ChangeNotifier {
     if (searchText.length < 2) {
       return [];
     }
-    return locations
+    return _locations!
         .where(
-          (location) => location.name.toUpperCase().contains(
-            searchText.toUpperCase(),
-          ),
+          (location) =>
+              location.name.toUpperCase().contains(searchText.toUpperCase()),
         )
         .toList();
   }
