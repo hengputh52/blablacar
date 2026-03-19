@@ -67,9 +67,7 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
   @override
   Widget build(BuildContext context) {
 
-    return ChangeNotifierProvider.value(
-      value: widget.locationState,
-      child: Scaffold(
+    return Scaffold(
         body: Padding(
           padding: const EdgeInsets.only(
             left: BlaSpacings.m,
@@ -90,21 +88,21 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
               SizedBox(height: 20),
       
               Expanded(
-                child: Consumer<LocationState>(builder: (context, locationState, _) => 
+                child: 
                 ListView.builder(
-                  itemCount: locationState.filteredLocation.length,
+                  itemCount: filteredLocation.length,
                   itemBuilder: (context, index) => LocationTile(
-                    location: locationState.filteredLocation[index],
+                    location: filteredLocation[index],
                     onTap: onTap,
                   ),
                 ),
-              )
+              
               ),
             ],
           ),
         ),
-      ),
-    );
+      );
+    
   }
 }
 
