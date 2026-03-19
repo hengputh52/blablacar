@@ -2,8 +2,10 @@ import 'package:blablacar/week8/model/ride_pref/ride_pref.dart';
 import 'package:blablacar/week8/services/ride_prefs_service.dart';
 import 'package:blablacar/week8/ui/screens/home/home_view_model/home_view_model.dart';
 import 'package:blablacar/week8/ui/screens/home/widgets/home_history_tile.dart';
+import 'package:blablacar/week8/ui/screens/rides_selection/rides_selection_screen.dart';
 import 'package:blablacar/week8/ui/theme/theme.dart';
 import 'package:blablacar/week8/ui/widgets/picker/bla_ride_preference_picker.dart';
+import 'package:blablacar/week8/utils/animations_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -81,8 +83,16 @@ class BuildHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeViewModel hv = context.watch<HomeViewModel>();
-    List<RidePreference> history = RidePrefsService.preferenceHistory.reversed
-        .toList();
+    // List<RidePreference> history = RidePrefsService.preferenceHistory.reversed
+    //     .toList();
+
+    void onRideSelected(RidePreference selectedPreference) async {
+      hv.onSelectPreference(selectedPreference);
+      await Navigator.of(
+        context,
+      ).push(AnimationUtils.createBottomToTopRoute(RidesSelectionScreen()));
+    }
+
     return SizedBox(
       height: 200, // Set a fixed height
       child: ListView.builder(
@@ -90,8 +100,8 @@ class BuildHistory extends StatelessWidget {
         physics: AlwaysScrollableScrollPhysics(),
         itemCount: hv.preferenceHistory.length,
         itemBuilder: (ctx, index) => HomeHistoryTile(
-          ridePref: history[index],
-          onPressed: () => hv.onSelectPreference(hv.preferenceHistory[index]),
+          ridePref: hv.preferenceHistory[index],
+          onPressed: () => onRideSelected(hv.preferenceHistory[index]),
         ),
       ),
     );
